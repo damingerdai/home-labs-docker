@@ -26,6 +26,21 @@ services:
        - "1022:1022"
     extra_hosts:
       - host.docker.internal:host-gateway
+  runner:
+    image: gitea/act_runner:0.2.6
+    container_name: gitea_runner
+    environment:
+      CONFIG_FILE: /config.yaml
+      GITEA_INSTANCE_URL: http://gitea:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: dQbhULrsfJ59gCC6HacJbRbI0MOqDLpROVUEvBUA
+      GITEA_RUNNER_NAME: "damingerdai gitea runner"
+      GITEA_RUNNER_LABELS: "大明二代"
+    volumes:
+      - ./runner-config.yaml:/config.yaml
+      - ./runner-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+        - gitea
 networks:
   gitea:
     external: false
