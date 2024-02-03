@@ -18,12 +18,12 @@ services:
     networks:
       - gitea
     volumes:
-       - ./data:/data
-       - /etc/timezone:/etc/timezone:ro
-       - /etc/localtime:/etc/localtime:ro
+      - ./data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
-       - "13000:3000"
-       - "1022:1022"
+      - "13000:3000"
+      - "1022:1022"
     extra_hosts:
       - host.docker.internal:host-gateway
   runner:
@@ -40,7 +40,26 @@ services:
       - ./runner-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-        - gitea
+      - gitea
+
+  runner2:
+    build:
+      context: ./
+      dockerfile: runner.Dockerfile
+    container_name: custom_gitea_runner
+    environment:
+      CONFIG_FILE: /config.yaml
+      GITEA_INSTANCE_URL: http://gitea:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: pH62IR2hvXPXj0k3cuQYwOURJz8PHH5zggkFM7KU
+      GITEA_RUNNER_NAME: "damingerdai custom gitea runner"
+      GITEA_RUNNER_LABELS: "default_runner"
+    volumes:
+      - ./runner-config2.yaml:/config.yaml
+      - ./runner-data2:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitea
+
 networks:
   gitea:
     external: false
