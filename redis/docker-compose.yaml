@@ -1,0 +1,18 @@
+version: "3"
+services:
+  redis:
+    image: redis:7.2.4-alpine3.19
+    container_name: redis
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    volumes:
+      - ./redis-data:/data/redis
+    networks:
+      - redis-network
+    extra_hosts:
+      - host.docker.interanl:host-gateway
+
+networks:
+  redis-network:
+    external: false
