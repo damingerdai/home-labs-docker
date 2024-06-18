@@ -16,6 +16,24 @@ services:
       - pg-network
     extra_hosts:
       - host.docker.internal:host-gateway
+  pgadmin4:
+    image: dpage/pgadmin4:8.8
+    container_name: pgadmin4
+    restart: "always"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "mingguobin@live.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+      PGADMIN_CONFIG_SESSION_EXPIRATION_TIME: 365
+      PGADMIN_CONFIG_MAX_SESSION_IDLE_TIME: 60
+    volumes:
+      - ./pgadmin4-data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - pg-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
 networks:
   pg-network:
     external: false
