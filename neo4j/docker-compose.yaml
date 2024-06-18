@@ -1,0 +1,23 @@
+version: "3"
+services:
+  neo4j:
+    image: neo4j:5.20.0-community-ubi9
+    container_name: neo4j
+    privileged: true
+    restart: always
+    environment:
+      - NEO4J_AUTH=neo4j/12345678
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./data:/var/lib/neo4j/data
+      - ./logs:/var/lib/neo4j/logs
+    networks:
+      - neo4j-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+networks:
+  neo4j-network:
+    external: false
