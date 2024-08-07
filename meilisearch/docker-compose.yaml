@@ -1,0 +1,16 @@
+version: "3"
+services:
+  meilisearch:
+    image: getmeili/meilisearch:v1.9
+    container_name: meilisearch
+    ports:
+      - 7700:7700
+    volumes:
+      - ./data.ms:/data.ms
+    networks:
+      - meilisearch-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+networks:
+  meilisearch-network:
+    external: false
