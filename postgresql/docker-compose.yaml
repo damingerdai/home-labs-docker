@@ -26,13 +26,16 @@ services:
       PGADMIN_CONFIG_SESSION_EXPIRATION_TIME: 365
       PGADMIN_CONFIG_MAX_SESSION_IDLE_TIME: 60
     volumes:
-      - ./pgadmin4-data:/var/lib/pgadmin
+      - pgadmin4-data:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
       - pg-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+volumes:
+  pgadmin4-data:
 
 networks:
   pg-network:
