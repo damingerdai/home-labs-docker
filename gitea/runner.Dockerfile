@@ -1,4 +1,4 @@
-FROM gitea/act_runner:0.2.6
+FROM gitea/act_runner:0.2.11
 
 RUN apk add --no-cache nodejs
 
