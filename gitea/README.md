@@ -1,0 +1,12 @@
+# gitea
+
+## 创建数据库
+
+```sql
+CREATE DATABASE gitea;
+CREATE USER gitea WITH PASSWORD '123456';
+GRANT ALL PRIVILEGES ON DATABASE gitea TO gitea;
+GRANT ALL PRIVILEGES ON DATABASE gitea TO gitea;
+GRANT USAGE ON SCHEMA public TO gitea;
+GRANT CREATE ON SCHEMA public TO gitea;
+```
