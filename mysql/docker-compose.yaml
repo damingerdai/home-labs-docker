@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 services:
   mysql:
-    image: mysql:8.3.0
-    container_name: mysql-8.3
+    image: mysql:9.1.0
+    container_name: mysql-9.1
     volumes:
       - ./mysql-data:/var/lib/mysql
     restart: always
@@ -14,7 +14,13 @@ services:
       MYSQL_PASSWORD: 123456
     ports:
       - "3306:3306"
-    command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password' ]
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--default-authentication-plugin=mysql_native_password",
+      ]
     networks:
       - mysql-network
     extra_hosts:
