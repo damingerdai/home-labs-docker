@@ -1,0 +1,30 @@
+services:
+  prometheus:
+    image: bitnami/prometheus:3.0.1
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitor-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  grafana:
+    image: grafana/grafana:11.4.0
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    ports:
+      - "13000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - monitor-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+networks:
+  monitor-network:
+    external: false
