@@ -18,7 +18,7 @@ services:
     hostname: grafana
     restart: always
     ports:
-      - "13000:3000"
+      - "13001:3000"
     depends_on:
       - prometheus
     networks:
