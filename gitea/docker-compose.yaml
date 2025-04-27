@@ -32,9 +32,11 @@ services:
     environment:
       CONFIG_FILE: /config.yaml
       GITEA_INSTANCE_URL: http://gitea:3000
-      GITEA_RUNNER_REGISTRATION_TOKEN: dQbhULrsfJ59gCC6HacJbRbI0MOqDLpROVUEvBUA
-      GITEA_RUNNER_NAME: "damingerdai gitea runner"
-      GITEA_RUNNER_LABELS: "大明二代"
+      GITEA_RUNNER_REGISTRATION_TOKEN: ZgiuCRK1UEZq6Br7EZk5mzjOkVEmwzwlNWcbQ5jC
+      # GITEA_RUNNER_NAME: "damingerdai gitea runner"
+      GITEA_RUNNER_NAME: 大明二代
+      # gitea中的run-on使用的这个labels
+      GITEA_RUNNER_LABELS: "ubuntu-latest"
     volumes:
       - ./runner-config.yaml:/config.yaml
       - ./runner-data:/data
