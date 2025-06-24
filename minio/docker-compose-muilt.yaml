@@ -1,0 +1,92 @@
+services:
+  minio1:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: minio_node1
+    restart: unless-stopped
+    ports:
+      - "19000:9000" # 节点1 API端口
+      - "19001:9001" # 节点1控制台端口
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: YourStrongPassword123! # 替换为强密码
+    volumes:
+      - ./minio1/data1:/data1 # 节点1磁盘1
+      - ./minio1/data2:/data2 # 节点1磁盘2
+    command: server
+      http://minio1/data1 http://minio1/data2
+      http://minio2/data1 http://minio2/data2
+      http://minio3/data1 http://minio3/data2
+      http://minio4/data1 http://minio4/data2
+      --console-address ":9001" # 显式声明控制台端口[1,2](@ref)
+    networks:
+      - minio-cluster-net
+
+  minio2:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: minio_node2
+    restart: unless-stopped
+    ports:
+      - "19002:9000" # 节点2 API端口
+      - "19003:9001" # 节点2控制台端口
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: YourStrongPassword123!
+    volumes:
+      - ./minio2/data1:/data1
+      - ./minio2/data2:/data2
+    command: server
+      http://minio1/data1 http://minio1/data2
+      http://minio2/data1 http://minio2/data2
+      http://minio3/data1 http://minio3/data2
+      http://minio4/data1 http://minio4/data2
+      --console-address ":9001"
+    networks:
+      - minio-cluster-net
+
+  minio3:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: minio_node3
+    restart: unless-stopped
+    ports:
+      - "19004:9000" # 节点3 API端口
+      - "19005:9001" # 节点3控制台端口
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: YourStrongPassword123!
+    volumes:
+      - ./minio3/data1:/data1
+      - ./minio3/data2:/data2
+    command: server
+      http://minio1/data1 http://minio1/data2
+      http://minio2/data1 http://minio2/data2
+      http://minio3/data1 http://minio3/data2
+      http://minio4/data1 http://minio4/data2
+      --console-address ":9001"
+    networks:
+      - minio-cluster-net
+
+  minio4:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: minio_node4
+    restart: unless-stopped
+    ports:
+      - "19006:9000" # 节点4 API端口
+      - "19007:9001" # 节点4控制台端口
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: YourStrongPassword123!
+    volumes:
+      - ./minio4/data1:/data1
+      - ./minio4/data2:/data2
+    command: server
+      http://minio1/data1 http://minio1/data2
+      http://minio2/data1 http://minio2/data2
+      http://minio3/data1 http://minio3/data2
+      http://minio4/data1 http://minio4/data2
+      --console-address ":9001"
+    networks:
+      - minio-cluster-net
+
+networks:
+  minio-cluster-net:
+    driver: bridge # 确保节点间直接通信[7,8](@ref)
