@@ -1,7 +1,7 @@
 services:
   mysql:
-    image: mysql:8.3.0
-    container_name: mysql-8.3
+    image: mysql:9.4.0
+    container_name: mysql-9.4
     volumes:
       - ./mysql-data:/var/lib/mysql
     restart: always
