@@ -27,3 +27,7 @@ docker exec gitea_runner apk add --no-cache nodejs
     - "ubuntu-20.04:docker://gitea/runner-images:ubuntu-20.04"
 
 ```
+
+## 默认用户
+
+damingerdai/mingguobin4
