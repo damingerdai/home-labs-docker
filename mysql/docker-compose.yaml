@@ -3,7 +3,7 @@ services:
     image: mysql:9.4.0
     container_name: mysql-9.4
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./mysql9-data:/var/lib/mysql
     restart: always
     environment:
       TZ: Asia/Shanghai
