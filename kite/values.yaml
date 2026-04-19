@@ -1,0 +1,42 @@
+# 1. 数据库集成：使用外部 PostgreSQL
+db:
+  type: postgres
+  # 注意：这里使用你之前创建的 Service 名字 external-pg
+  # 20260405 是你设定的密码
+  dsn: "postgres://kite_user:20260405@external-pg:5432/kite_db?sslmode=disable"
+
+# 2. 禁用内置 SQLite 持久化（因为已经改用 PG，不需要挂载本地存储）
+sqlite:
+  persistence:
+    enabled: false
+
+# 3. Ingress 域名与 HTTPS 配置
+ingress:
+  enabled: true
+  # K3s 默认 Ingress Controller 是 traefik
+  className: "traefik"
+  annotations:
+    # 强制启用 TLS 访问
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  hosts:
+    - host: kite.damingerdailocal.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: kite-tls-secret
+      hosts:
+        - kite.damingerdailocal.com
+
+# 4. 生产环境建议：资源限制
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+# 5. 副本数（如果需要高可用可以增加，但需确认应用是否支持多实例水平扩展）
+replicaCount: 1
