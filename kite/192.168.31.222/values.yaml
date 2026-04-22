@@ -20,7 +20,7 @@ ingress:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
   hosts:
-    - host: kite.damingerdaiinernal.com
+    - host: kite.damingerdaiinternal.com
       paths:
         - path: /
           pathType: ImplementationSpecific
