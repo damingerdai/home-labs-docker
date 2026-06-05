@@ -1,6 +1,7 @@
+version: "3"
 services:
   gitea:
-    image: docker.io/gitea/gitea:1.26
+    image: docker.io/gitea/gitea:1.22.6
     container_name: gitea
     environment:
       - USER_UID=1000
@@ -13,7 +14,6 @@ services:
       - APP_NAME=大明二代的gitea
       - SSH_PORT=1022
       - SSH_LISTEN_PORT=1022
-      - GITEA__actions__ENABLED=true
     restart: always
     networks:
       - gitea
@@ -27,25 +27,40 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
   runner:
-    image: gitea/act_runner:0.6.0
+    image: gitea/act_runner:0.2.11
     container_name: gitea_runner
-    depends_on:
-      - gitea
     environment:
       CONFIG_FILE: /config.yaml
-      # GITEA_INSTANCE_URL: http://gitea:3000
-      GITEA_INSTANCE_URL: http://192.168.31.220:13000
-      GITEA_RUNNER_REGISTRATION_TOKEN: DCFix6CfbFLPxmg7UYHLTO5sZMcrKi0YSqz7y1TI
+      GITEA_INSTANCE_URL: http://gitea:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: Efz7im2XZCgbawmSo5ynO4YZEXZ8mW5cQx4dqFnd
       GITEA_RUNNER_NAME: "damingerdai gitea runner"
       # gitea中的run-on使用的这个labels
       GITEA_RUNNER_LABELS: "ubuntu-latest"
     volumes:
-      - ./config.yaml:/config.yaml
+      - ./runner-config.yaml:/config.yaml
       - ./runner-data:/data
-      - ./runner_data/cache:/root/.cache
       - /var/run/docker.sock:/var/run/docker.sock # 允许 Runner 访问 Docker Socket
     networks:
       - gitea
+
+  runner2:
+    build:
+      context: ./
+      dockerfile: runner.Dockerfile
+    container_name: custom_gitea_runner
+    environment:
+      CONFIG_FILE: /config.yaml
+      GITEA_INSTANCE_URL: http://gitea:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: pH62IR2hvXPXj0k3cuQYwOURJz8PHH5zggkFM7KU
+      GITEA_RUNNER_NAME: "damingerdai custom gitea runner"
+      GITEA_RUNNER_LABELS: "default_runner"
+    volumes:
+      - ./runner-config2.yaml:/config.yaml
+      - ./runner-data2:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitea
+
 networks:
   gitea:
     external: false
