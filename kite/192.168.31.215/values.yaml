@@ -29,6 +29,9 @@ ingress:
       hosts:
         - kite.damingerdailocal.com
 
+config:
+  enabled: false
+
 # 4. 生产环境建议：资源限制
 resources:
   limits:
