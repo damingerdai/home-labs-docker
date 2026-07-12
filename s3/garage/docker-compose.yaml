@@ -1,0 +1,29 @@
+services:
+  garage:
+    image: dxflrs/garage:v2.3.0
+    container_name: garage
+    restart: unless-stopped
+    ports:
+      - "3900:3900" # S3 API
+      - "3902:3902" # Web 静态文件托管
+      - "3903:3903" # Admin API
+    volumes:
+      - ./config/garage.toml:/etc/garage.toml:ro
+      - ./meta:/var/lib/garage/meta
+      - ./data:/var/lib/garage/data
+    environment:
+      - RUST_LOG=garage=info
+
+  # 选填：社区搭建的 WebUI，可以直接图形化管理存储桶和 Key
+  garage-webui:
+    image: khairul169/garage-webui:latest
+    container_name: garage-webui
+    restart: unless-stopped
+    ports:
+      - "3909:3909" # WebUI 访问端口
+    environment:
+      - API_BASE_URL=http://garage:3903
+      - S3_REGION=garage
+      - S3_ENDPOINT_URL=http://garage:3900
+    depends_on:
+      - garage

@@ -1,0 +1,21 @@
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+db_engine = "sqlite"
+replication_factor = 1
+
+# RPC 相关配置（在 v2.3.0 中必须全放在最外层根级别）
+rpc_bind_addr = "[::]:3901"
+# openssl rand -hex 32
+rpc_secret = "85d87d18af601a69d3a2c01ef41ac3126e93efccbdeccce3c92c111681a380c8"
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web.garage"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "123456"
