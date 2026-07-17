@@ -1,7 +1,26 @@
 {
   "distSpecVersion": "1.1.0",
   "storage": {
-    "rootDirectory": "/var/lib/zot"
+    "rootDirectory": "/var/lib/zot",
+    "gc": true,
+    "gcInterval": "12h",
+    "retention": {
+      "policies": [
+        {
+          "repositories": {
+            "**"
+          },
+          "keepTags": [
+            {
+              "mostRecentlyPushedCount": 5
+            },
+            {
+              "pulledWithin": "168h"
+            }
+          ]
+        }
+      ]
+    }
   },
   "http": {
     "address": "0.0.0.0",
