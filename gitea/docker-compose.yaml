@@ -13,7 +13,7 @@ services:
       - APP_NAME=大明二代的gitea
       - SSH_PORT=1022
       - SSH_LISTEN_PORT=1022
-      - GITEA__actions__ENABLED=true
+      #- GITEA__actions__ENABLED=true
     restart: always
     networks:
       - gitea
@@ -35,17 +35,15 @@ services:
       CONFIG_FILE: /config.yaml
       # GITEA_INSTANCE_URL: http://gitea:3000
       GITEA_INSTANCE_URL: http://192.168.31.220:13000
-      GITEA_RUNNER_REGISTRATION_TOKEN: DCFix6CfbFLPxmg7UYHLTO5sZMcrKi0YSqz7y1TI
+      GITEA_RUNNER_REGISTRATION_TOKEN: Efz7im2XZCgbawmSo5ynO4YZEXZ8mW5cQx4dqFnd
       GITEA_RUNNER_NAME: "damingerdai gitea runner"
-      # gitea中的run-on使用的这个labels
-      GITEA_RUNNER_LABELS: "ubuntu-latest"
     volumes:
       - ./config.yaml:/config.yaml
       - ./runner-data:/data
-      - ./runner_data/cache:/root/.cache
+      - ./runner-data/cache:/root/.cache
       - /var/run/docker.sock:/var/run/docker.sock # 允许 Runner 访问 Docker Socket
     networks:
       - gitea
 networks:
   gitea:
-    external: false
+    driver: bridge

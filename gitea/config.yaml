@@ -70,14 +70,14 @@ cache:
   enabled: true
   # The directory to store the cache data.
   # If it's empty, the cache data will be stored in $HOME/.cache/actcache.
-  dir: ""
+  dir: "/data/actcache"
   # The host of the cache server.
   # It's not for the address to listen, but the address to connect from job containers.
   # So 0.0.0.0 is a bad choice, leave it empty to detect automatically.
-  host: ""
+  host: "gitea_runner"
   # The port of the cache server.
   # 0 means to use a random available port.
-  port: 0
+  port: 8000
   # The external cache server URL. Valid only when enable is true.
   # If it's specified, act_runner will use this URL as the ACTIONS_CACHE_URL rather than start a server by itself.
   # The URL should generally end with "/".
@@ -119,7 +119,7 @@ container:
   # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
   docker_host: ""
   # Pull docker image(s) even if already present
-  force_pull: true
+  force_pull: false
   # Rebuild docker image(s) even if already present
   force_rebuild: false
   # Always require a reachable docker daemon, even if not required by act_runner
