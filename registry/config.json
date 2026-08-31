@@ -7,9 +7,7 @@
     "retention": {
       "policies": [
         {
-          "repositories": {
-            "**"
-          },
+          "repositories": ["**"],
           "keepTags": [
             {
               "mostRecentlyPushedCount": 5
