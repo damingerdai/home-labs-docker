@@ -1,0 +1,32 @@
+services:
+  loki:
+    image: grafana/loki:3.6.3
+    container_name: loki
+    restart: unless-stopped
+
+    command:
+      - -config.file=/etc/loki/local-config.yaml
+      - -target=all
+
+    ports:
+      - "127.0.0.1:3100:3100"
+
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml:ro
+      - loki-data:/loki
+
+    mem_limit: 512m
+    cpus: 1.0
+
+    environment:
+      GOMEMLIMIT: 400MiB
+      GOGC: "100"
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+volumes:
+  loki-data:
